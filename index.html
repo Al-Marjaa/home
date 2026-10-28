@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Al Marjaa — Government Services, Handled</title>
+  <meta name="description" content="Commercial register, NSSF, real estate, vehicles, MoFA legalisation, insurance and more — send your documents online. | السجل التجاري، الضمان، العقارات، السيارات، الخارجية، التأمين." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Manrope:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <script>(function(){var h=document.documentElement;h.setAttribute("data-theme","dark");try{var q=new URLSearchParams(location.search).get("lang");var l=q==="ar"||q==="en"?q:localStorage.getItem("lang");if(l==="ar"){h.lang="ar";h.dir="rtl";}if(localStorage.getItem("theme")==="light")h.setAttribute("data-theme","light");}catch(e){}})();</script>
+</head>
+<body data-page="home" data-scene="full">
+  <div id="loader" aria-hidden="true">
+    <div class="loader-cube"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+    <p data-brand>Al Marjaa</p>
+  </div>
+
+  <main id="top">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-inner">
+        <p class="eyebrow"><span class="dot"></span> <span data-i18n="hero.eyebrow"></span></p>
+        <h1 class="hero-title">
+          <span class="line" data-i18n="hero.l1"></span>
+          <span class="line" data-i18n="hero.l2"></span>
+          <span class="line grad" data-i18n="hero.l3"></span>
+        </h1>
+        <p class="hero-sub" data-i18n="hero.sub"></p>
+        <div class="hero-cta">
+          <a href="#apply" class="btn" data-i18n="hero.cta1"></a>
+          <a href="#finder" class="btn btn-ghost" data-i18n="wz.eyebrow"></a>
+        </div>
+        <div class="hero-stats">
+          <div><b data-count="12">0</b><span data-i18n="stat.1"></span></div>
+          <div><b data-count="38">0</b><span data-i18n="stat.2"></span></div>
+          <div><b data-count="24">0</b><span data-i18n="stat.3"></span></div>
+        </div>
+      </div>
+      <div class="scroll-hint"><span></span><i data-i18n="scroll"></i></div>
+    </section>
+
+    <div class="marquee"><div class="marquee-track" id="marquee"></div></div>
+
+    <!-- Service finder -->
+    <section id="finder" class="section">
+      <div class="section-head reveal">
+        <p class="eyebrow" data-i18n="wz.eyebrow"></p>
+        <h2 data-i18n="wz.title"></h2>
+      </div>
+      <div class="wz reveal" id="wz"></div>
+    </section>
+
+    <!-- Services -->
+    <section id="services" class="section">
+      <div class="section-head reveal">
+        <p class="eyebrow" data-i18n="svc.eyebrow"></p>
+        <h2 data-i18n="svc.title"></h2>
+        <p class="muted" data-i18n="svc.sub"></p>
+      </div>
+      <div class="filter reveal">
+        <input type="search" id="search" data-i18n-ph="svc.search" />
+        <a href="services.html" class="btn btn-ghost btn-small" data-i18n="footer.all"></a>
+      </div>
+      <div class="grid" id="servicesGrid"></div>
+    </section>
+
+    <!-- Process -->
+    <section id="process" class="section process">
+      <div class="section-head reveal">
+        <p class="eyebrow" data-i18n="proc.eyebrow"></p>
+        <h2 data-i18n="proc.title"></h2>
+      </div>
+      <ol class="steps">
+        <li class="step reveal"><span class="step-n">01</span><h3 data-i18n="s1.t"></h3><p data-i18n="s1.p"></p></li>
+        <li class="step reveal" data-delay="90"><span class="step-n">02</span><h3 data-i18n="s2.t"></h3><p data-i18n="s2.p"></p></li>
+        <li class="step reveal" data-delay="180"><span class="step-n">03</span><h3 data-i18n="s3.t"></h3><p data-i18n="s3.p"></p></li>
+        <li class="step reveal" data-delay="270"><span class="step-n">04</span><h3 data-i18n="s4.t"></h3><p data-i18n="s4.p"></p></li>
+      </ol>
+    </section>
+
+    <!-- Live tracking demo -->
+    <section id="tracker" class="section trk">
+      <div class="trk-copy reveal">
+        <p class="eyebrow" data-i18n="trk.eyebrow"></p>
+        <h2 data-i18n="trk.title"></h2>
+        <p class="muted" data-i18n="trk.sub"></p>
+        <a href="#" class="btn" id="trkCta" data-i18n="trk.cta"></a>
+      </div>
+      <div class="trk-stage reveal" data-delay="120" aria-hidden="true">
+        <div class="trk-phone">
+          <div class="trk-notch"></div>
+          <p class="trk-label" data-i18n="nav.myfiles"></p>
+          <div class="trk-card">
+            <div class="trk-row"><b data-svc-title="realestate"></b><span id="trkBadge" class="badge s-received"></span></div>
+            <small>AM-B5E28F</small>
+            <ol class="trk-steps" id="trkSteps"></ol>
+          </div>
+          <div class="trk-note"><small data-i18n="trk.note"></small><p data-i18n="trk.msg"></p></div>
+        </div>
+        <div class="trk-float f1"></div><div class="trk-float f2"></div>
+      </div>
+    </section>
+
+    <!-- Apply / Inquiry -->
+    <section id="apply" class="section apply">
+      <div class="apply-wrap">
+        <div class="apply-side reveal">
+          <p class="eyebrow" data-i18n="apply.eyebrow"></p>
+          <h2 data-i18n="apply.title"></h2>
+          <p class="muted" data-i18n="apply.sub"></p>
+          <div class="checklist-card" id="checklistCard"></div>
+          <p class="disclaimer" data-i18n="disclaimer"></p>
+        </div>
+
+        <form id="inquiryForm" class="form reveal" method="POST" enctype="multipart/form-data" novalidate>
+          <input type="hidden" name="_subject" id="fSubject" value="New inquiry" />
+          <input type="hidden" name="_template" value="table" />
+          <input type="hidden" name="_captcha" value="false" />
+          <input type="hidden" name="_next" id="fNext" />
+          <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" />
+          <div class="row">
+            <label class="field"><span data-i18n="f.name"></span><input name="Name" required autocomplete="name" /></label>
+            <label class="field"><span data-i18n="f.phone"></span><input name="Phone" type="tel" required autocomplete="tel" placeholder="+961…" dir="ltr" /></label>
+          </div>
+          <div class="row">
+            <label class="field"><span data-i18n="f.email"></span><input name="email" type="email" autocomplete="email" dir="ltr" /></label>
+            <label class="field"><span data-i18n="f.pref"></span>
+              <select name="Preferred contact" id="fPref">
+                <option value="WhatsApp" data-i18n="f.pref.wa"></option>
+                <option value="Phone call" data-i18n="f.pref.call"></option>
+                <option value="Email" data-i18n="f.pref.email"></option>
+              </select>
+            </label>
+          </div>
+          <div class="row">
+            <label class="field"><span data-i18n="f.service"></span><select name="Service" id="fService" required></select></label>
+            <label class="field"><span data-i18n="f.tx"></span><select name="Transaction" id="fSub" required></select></label>
+          </div>
+          <div class="uploads" id="uploads"></div>
+          <div class="field"><span data-i18n="f.extra"></span>
+            <label class="drop" data-drop>
+              <input type="file" name="attachment" id="extraFiles" multiple accept=".pdf,.jpg,.jpeg,.png,.heic,.doc,.docx" />
+              <p data-i18n="drop"></p>
+            </label>
+          </div>
+          <label class="field"><span data-i18n="f.notes"></span><textarea name="Message" rows="4" data-i18n-ph="f.notesPh"></textarea></label>
+          <div class="progress" id="progress" hidden><span></span></div>
+          <div class="form-foot">
+            <p class="small muted" id="sizeInfo"></p>
+            <button type="submit" class="btn" id="submitBtn" data-i18n="f.send"></button>
+          </div>
+          <p class="small muted"><span data-i18n="f.chat"></span> <a href="#" data-wa data-i18n="f.chatLink"></a></p>
+        </form>
+      </div>
+    </section>
+
+    <!-- Latest news -->
+    <section id="latest" class="section">
+      <div class="section-head row-head reveal">
+        <div><p class="eyebrow" data-i18n="news.eyebrow"></p><h2 data-i18n="news.latest"></h2></div>
+        <a href="news.html" class="btn btn-ghost btn-small" data-i18n="news.viewAll"></a>
+      </div>
+      <div class="news-grid" id="homeNews"></div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="section">
+      <div class="section-head reveal">
+        <p class="eyebrow" data-i18n="faq.eyebrow"></p>
+        <h2 data-i18n="faq.title"></h2>
+      </div>
+      <div class="faq">
+        <details class="reveal"><summary data-i18n="q1"></summary><p data-i18n="a1"></p></details>
+        <details class="reveal"><summary data-i18n="q2"></summary><p data-i18n="a2"></p></details>
+        <details class="reveal"><summary data-i18n="q3"></summary><p data-i18n="a3"></p></details>
+        <details class="reveal"><summary data-i18n="q4"></summary><p data-i18n="a4"></p></details>
+        <details class="reveal"><summary data-i18n="q5"></summary><p data-i18n="a5"></p></details>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="section contact">
+      <div class="contact-card reveal">
+        <div>
+          <p class="eyebrow" data-i18n="c.eyebrow"></p>
+          <h2 data-brand>Al Marjaa</h2>
+          <p class="ar big" data-brand-ar>المرجع</p>
+        </div>
+        <ul class="contact-list">
+          <li><span data-i18n="c.phone"></span><a data-tel dir="ltr"></a></li>
+          <li><span data-i18n="c.wa"></span><a href="#" data-wa dir="ltr" data-tel-text></a></li>
+          <li><span data-i18n="c.email"></span><a data-mail dir="ltr"></a></li>
+          <li><span data-i18n="c.addr"></span><b data-addr></b></li>
+          <li><span data-i18n="c.hours"></span><b data-hours></b></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="i18n.js"></script>
+  <script src="data.js"></script>
+  <script src="news.js"></script>
+  <script src="core.js"></script>
+  <script src="scene.js"></script>
+  <script src="home.js"></script>
+  <script src="account.js"></script>
+</body>
+</html>
