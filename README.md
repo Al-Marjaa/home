@@ -13,13 +13,13 @@ A 3D, bilingual (English / العربية) website with light and dark modes for
 | File | Upload to GitHub? |
 |---|---|
 | **Pages:** `index.html`, `services.html`, `service.html`, `news.html`, `article.html`, `about.html` | **Yes** |
-| **Style and scripts:** `style.css`, `core.js`, `scene.js`, `home.js`, `pages.js`, `account.js`, `i18n.js`, `data.js`, `news.js` | **Yes** |
+| **Style and scripts:** `style.css`, `core.js`, `scene.js`, `home.js`, `pages.js`, `account.js`, `i18n.js`, `data.js`, `news.js`, `newsroom.js` | **Yes** |
 | `google-apps-script/Code.gs` | No — pasted into Google (step 2) |
 
-> Seeing the old name or a broken layout? GitHub still has old files. Delete everything in the repo, upload all 15 files (and delete the old `app.js`), wait 1–2 minutes, then hard-refresh (Ctrl+Shift+R / Cmd+Shift+R).
+> Seeing the old name or a broken layout? GitHub still has old files. Delete everything in the repo, upload all 16 files (and delete the old `app.js`), wait 1–2 minutes, then hard-refresh (Ctrl+Shift+R / Cmd+Shift+R).
 
 ## 1. Publish on GitHub Pages
-1. Create a public repository on github.com and upload all 15 files.
+1. Create a public repository on github.com and upload all 16 files.
 2. Settings → Pages → Source: **Deploy from a branch** → `main` / `(root)` → Save.
 3. The site appears at `https://<username>.github.io/<repo>/`.
 
@@ -40,7 +40,7 @@ Do all of this signed in as **oliviadiaasayah@gmail.com**.
    and upload `data.js` to GitHub again.
 6. **Right away, sign up on your live website with oliviadiaasayah@gmail.com.** That address automatically becomes the office (admin) account. Do this before you share the site.
 
-**Updating from the one-page version?** Paste the new `Code.gs` over the old one → Save → run **setup** again (it adds the **News** tab and keeps your data) → then do the redeploy below.
+**Updating from the one-page version?** Paste the new `Code.gs` over the old one → Save → run **setup** again (it adds the **News** tab and keeps your data; allow any new permission Google asks for) → then do the redeploy below.
 
 Changed `Code.gs` later? Use **Deploy → Manage deployments → ✏️ Edit → Version: New version → Deploy**. The URL stays the same.
 
@@ -66,20 +66,21 @@ To make another staff member an office admin, have them sign up on the site, the
 
 **Forgot password:** clients click *Forgot password?*, get a 6-digit code by email (valid 30 minutes), and choose a new password.
 
-## 4. Posting news
-The **News** page shows two kinds of posts together, newest first:
-- **From the sheet (easiest):** open the **News** tab of the Tracking sheet and add a row:
-  - `id`: a short name with no spaces, like `office-closed-nov-22`
-  - `date`: like `2026-11-20`
-  - `category`: `news`, `guide` or `announcement`
-  - `service_id` (optional): links the post to a service, e.g. `vehicles`, `realestate`, `nssf`, `mofa`, `commercial`, `insurance`
-  - `title` / `title_ar`, `summary` / `summary_ar`
-  - `body` / `body_ar`: leave a blank line between paragraphs (Alt+Enter twice inside the cell)
-  - `source_name` / `source_url` (optional)
-  - tick **published**. Untick it to hide the post.
+## 4. Posting news (from the website)
+Log in on the site with the office account (oliviadiaasayah@gmail.com, or any account whose role is `admin`). You'll see:
+- a gold **Newsroom** button at the bottom of every page
+- a **New post** button on the News page
+- an **Edit post** button on every news card and article
 
-  It appears on the site within a minute (visitors who already have the site open see it on their next visit).
-- **Built in:** the posts in `news.js` (guides and a few real news items). Edit or delete them there if you like.
+In the Newsroom you can:
+- **Write** a post in English and Arabic (switch with the language tabs; a green dot means that version is filled in), pick the type and related service, set the date, add a cover picture (drag it in, click to choose, or paste it) and a source.
+- Watch the **live preview** as a card or as the full article, in either language.
+- **Save draft** (only you see it) or **Publish** (goes live straight away). Ctrl/⌘+S saves.
+- From **Posts**: search, filter, switch a post on/off the site, edit, view or delete. Built-in posts can be **hidden** or **edited** (your edited copy replaces them; *Restore original* brings the built-in one back).
+
+Pictures are stored in Drive under `Al Marjaa — Client Files / _News images` and shared "view only" so the website can show them. Posts are stored in the **News** tab of the Tracking sheet, so you can still edit them there if you prefer (blank line between paragraphs, tick `published`).
+
+Tip: `yoursite/news.html#newsroom` opens the Newsroom directly (it asks you to log in first).
 
 ## Limits to know
 - Each upload can be up to **25 MB** in total (`maxUploadMB` in `data.js`). Bigger files can go by WhatsApp.

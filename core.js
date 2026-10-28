@@ -296,30 +296,54 @@
 
   /* ---------- news: local list + rows from the Google Sheet "News" tab ---------- */
   let newsPromise = null;
+  const imgOk = u => /^https:\/\//.test(String(u || "")) ? String(u) : "";
   function news() {
     if (newsPromise) return newsPromise;
     const local = (window.NEWS || []).map(n => ({ ...n }));
     const url = S.googleScriptUrl;
     let cached = null;
-    try { cached = JSON.parse(sessionStorage.getItem("am_news") || "null"); } catch {}
-    const remote = cached ? Promise.resolve(cached) : !url ? Promise.resolve([]) :
+    try { cached = JSON.parse(sessionStorage.getItem("am_news2") || "null"); } catch {}
+    const remote = cached ? Promise.resolve(cached) : !url ? Promise.resolve({ items: [], hidden: [] }) :
       Promise.race([
-        fetch(url, { method: "POST", body: JSON.stringify({ action: "news" }) }).then(r => r.json()).then(o => o.ok ? o.items || [] : []),
-        new Promise(res => setTimeout(() => res([]), 6000))
-      ]).catch(() => []).then(items => { try { sessionStorage.setItem("am_news", JSON.stringify(items)); } catch {} return items; });
-    newsPromise = remote.then(items => {
-      const ids = new Set(items.map(i => i.id));
-      return [...items, ...local.filter(n => !ids.has(n.id))]
+        fetch(url, { method: "POST", body: JSON.stringify({ action: "news" }) }).then(r => r.json())
+          .then(o => o.ok ? { items: o.items || [], hidden: o.hidden || [] } : { items: [], hidden: [] }),
+        new Promise(res => setTimeout(() => res(null), 6000))
+      ]).catch(() => null).then(o => {
+        if (o) { try { sessionStorage.setItem("am_news2", JSON.stringify(o)); } catch {} }
+        return o || { items: [], hidden: [] };
+      });
+    newsPromise = remote.then(({ items, hidden }) => {
+      const skip = new Set([...items.map(i => i.id), ...(hidden || [])]);
+      return [...items.map(n => ({ ...n, fromSheet: true })), ...local.filter(n => !skip.has(n.id))]
         .filter(n => n.id && (n.title || n.titleAr))
+        .map(n => ({ ...n, image: imgOk(n.image) }))
         .sort((a, b) => String(b.date).localeCompare(String(a.date)));
     });
     return newsPromise;
   }
+  // after the office edits news on the site: forget the cached copy and re-render
+  const newsListeners = [];
+  function newsRefresh() {
+    try { sessionStorage.removeItem("am_news2"); } catch {}
+    newsPromise = null;
+    newsListeners.forEach(f => { try { f(); } catch (e) { console.error(e); } });
+  }
   const readMins = n => Math.max(1, Math.round(((AR() ? n.bodyAr : n.body) || []).join(" ").split(/\s+/).length / 200));
+
+  // a broken picture link should never leave a broken-image icon behind
+  document.addEventListener("error", e => {
+    const im = e.target;
+    if (!im || im.tagName !== "IMG") return;
+    const box = im.closest(".nc-img, .nf-art, .art-cover, .nr-cover, .nr-thumb, .nr-pv");
+    if (!box) return;
+    const host = im.closest(".has-img"); if (host) host.classList.remove("has-img");
+    if (box.matches(".nc-img, .art-cover")) box.remove(); else im.remove();
+  }, true);
 
   /* ---------- shared card markup ---------- */
   const newsCard = (n, i = 0) => `
-    <a class="news-card reveal tilt" data-delay="${(i % 3) * 80}" href="article.html?id=${encodeURIComponent(n.id)}">
+    <a class="news-card reveal tilt${n.image ? " has-img" : ""}" data-delay="${(i % 3) * 80}" data-nid="${esc(n.id)}" href="article.html?id=${encodeURIComponent(n.id)}">
+      ${n.image ? `<span class="nc-img"><img src="${esc(n.image)}" alt="" loading="lazy" referrerpolicy="no-referrer" /></span>` : ""}
       <span class="nc-top"><span class="nc-cat c-${esc(n.category)}">${t("ncat." + n.category)}</span><time>${fmtDate(n.date)}</time></span>
       <b>${esc(pick(n.title, n.titleAr))}</b>
       <span class="nc-sum">${esc(pick(n.summary, n.summaryAr))}</span>
@@ -329,7 +353,8 @@
   window.AM = {
     S, SV, t, esc, pad, safe, ext, toast, ICONS, qs, page,
     isAR: AR, lang: () => lang, pick, title, altTitle, subName, blurb, doc, docEn, svcById, fmtDate,
-    isLight, reduced, onLang, onTheme, reveal, news, newsCard, readMins, applyLang
+    isLight, reduced, onLang, onTheme, reveal, news, newsCard, readMins, applyLang,
+    newsRefresh, onNews: newsListeners
   };
 
   // page scripts register their hooks first, then everything renders once

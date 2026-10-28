@@ -166,8 +166,8 @@
       if (!shown.length) { $("#newsWrap").innerHTML = `<p class="muted">${t("news.empty")}</p>`; return; }
       const [f, ...rest] = shown;
       $("#newsWrap").innerHTML = `
-        <a class="news-feature reveal tilt" href="article.html?id=${encodeURIComponent(f.id)}" style="--c:${(AM.svcById(f.service) || {}).color || "#2ee6a8"}">
-          <span class="nf-art" aria-hidden="true"><span>${I[(AM.svcById(f.service) || {}).icon] || I.news}</span></span>
+        <a class="news-feature reveal tilt" data-nid="${esc(f.id)}" href="article.html?id=${encodeURIComponent(f.id)}" style="--c:${(AM.svcById(f.service) || {}).color || "#2ee6a8"}">
+          <span class="nf-art${f.image ? " has-img" : ""}" aria-hidden="true">${f.image ? `<img src="${esc(f.image)}" alt="" referrerpolicy="no-referrer" />` : `<span>${I[(AM.svcById(f.service) || {}).icon] || I.news}</span>`}</span>
           <span class="nf-body">
             <span class="nc-top"><span class="nc-cat c-${esc(f.category)}">${t("ncat." + f.category)}</span><time>${AM.fmtDate(f.date)}</time><span>${t("common.minRead", { n: AM.readMins(f) })}</span></span>
             <b>${esc(AM.pick(f.title, f.titleAr))}</b>
@@ -194,7 +194,7 @@
       document.title = `${AM.pick(n.title, n.titleAr)} — ${AM.isAR() ? AM.S.brandAr : AM.S.brand}`;
       const more = list.filter(x => x.id !== n.id).slice(0, 3);
       main.innerHTML = `
-      <article class="article" style="--c:${s ? s.color : "#2ee6a8"}">
+      <article class="article" data-nid="${esc(n.id)}" style="--c:${s ? s.color : "#2ee6a8"}">
         <header class="page-hero art-hero">
           <div class="ph-inner narrow">
             <nav class="crumbs reveal"><a href="news.html">${t("nav.news")}</a><span>/</span><b>${t("ncat." + n.category)}</b></nav>
@@ -203,6 +203,7 @@
             <p class="ph-sub reveal" data-delay="180">${esc(AM.pick(n.summary, n.summaryAr))}</p>
           </div>
         </header>
+        ${n.image ? `<figure class="art-cover reveal"><img src="${esc(n.image)}" alt="" referrerpolicy="no-referrer" /></figure>` : ""}
         <div class="art-layout">
           <div class="art-body reveal">${body.map(p => `<p dir="auto">${esc(p)}</p>`).join("")}
             ${n.source && n.source.url ? `<p class="art-source">${t("common.source")}: <a href="${esc(n.source.url)}" target="_blank" rel="noopener">${esc(n.source.name || n.source.url)}</a></p>` : ""}
@@ -253,10 +254,14 @@
   }
 
   const render = { services: servicesPage, service: servicePage, news: newsPage, article: articlePage, about: aboutPage }[AM.page];
-  if (render) AM.onLang.push(() => {
+  const rerender = () => {
     render();
     // re-apply WhatsApp links etc. inside freshly rendered markup
     $$("[data-wa]", main).forEach(a => { a.href = `https://wa.me/${AM.S.whatsapp}?text=${encodeURIComponent(t("wa.msg", { brand: AM.S.brand }))}`; a.target = "_blank"; a.rel = "noopener"; });
     AM.reveal(main);
-  });
+  };
+  if (render) {
+    AM.onLang.push(rerender);
+    if (["news", "article", "service"].includes(AM.page)) AM.onNews.push(rerender);
+  }
 })();

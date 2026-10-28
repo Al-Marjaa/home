@@ -126,6 +126,7 @@
       AM.reveal($("#homeNews"));
     });
   }
+  AM.onNews.push(renderNews);
 
   /* =====================================================================
      INQUIRY FORM

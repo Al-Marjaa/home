@@ -22,6 +22,8 @@
   let token = store.get("token"), user = store.get("user");
   let rows = [], scope = "mine", pending = null, resetEmail = "";
   const isAdmin = () => !!(user && user.role === "admin");
+  Account.isAdmin = isAdmin;
+  Account.onChange = [];          // newsroom listens here: fn(isAdmin)
 
   /* ---------- talk to the Google script ---------- */
   async function api(action, data = {}) {
@@ -36,6 +38,8 @@
     }
     return out;
   }
+  Account.api = api;
+  Account.login = () => openAuth("login");
   const toB64 = f => new Promise((res, rej) => {
     const r = new FileReader();
     r.onload = () => res(String(r.result).split(",")[1] || "");
@@ -96,7 +100,10 @@
     av.hidden = !user;
     if (user) av.textContent = (firstName()[0] || "•").toUpperCase();
     cta.classList.toggle("is-user", !!user);
+    const adm = isAdmin();
+    if (adm !== lastAdmin) { lastAdmin = adm; Account.onChange.forEach(f => { try { f(adm); } catch (e) { console.error(e); } }); }
   }
+  let lastAdmin = null;
 
   function prefill() {
     if (!user) return;
